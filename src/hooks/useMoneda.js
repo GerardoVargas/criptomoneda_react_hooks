@@ -5,7 +5,6 @@ const useMoneda = () => {
     //State del custom Hook
     const [state, actualizarState] = useState('')
 
-
     const Seleccionar = () => (
         <Fragment>
             <label>Moneda</label>
