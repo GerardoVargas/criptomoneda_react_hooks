@@ -28,6 +28,7 @@ const Formulario = () => {
 
     //State del listado de criptomonedas
     const [listaCripto, guardarCriptomonedas] = useState([])
+    const [error, guardarError] = useState(false)
 
 
     //Arreglo de Monedas
@@ -53,10 +54,30 @@ const Formulario = () => {
             guardarCriptomonedas(resultado.data.Data)
         }
         consultarAPI()
+        //guardarError(false)
     }, [])
 
+    //cuando el usuario hace submit
+    const cotizarMoneda = e => {
+        e.preventDefault()
+
+        //validar su ambos campos estan llenos
+        if(moneda === '' || crypto === '') {
+            guardarError(true)
+            return
+        }
+
+        //pasar los datos a otro componente
+        guardarError(false)
+    }
+
     return ( 
-        <form>
+        <form
+            onSubmit={cotizarMoneda}
+        >
+
+            {error ? 'Hay un error!' : null}
+
             <SelectMonedas/>
 
             <SelectCripto/>
