@@ -24,7 +24,7 @@ const Boton = styled.input`
     }
 `
 
-const Formulario = () => {
+const Formulario = ({guardarMoneda, guardarCriptomoneda}) => {
 
     //State del listado de criptomonedas
     const [listaCripto, guardarCriptomonedas] = useState([])
@@ -43,7 +43,7 @@ const Formulario = () => {
     const [moneda, SelectMonedas] = useMoneda('Elije tu Moneda', '', MONEDAS)
 
     //Utilizar useCryptomoneda
-    const [crypto, SelectCripto] = useCriptomoneda('Elije tu Criptomoneda', '', listaCripto)
+    const [cripto, SelectCripto] = useCriptomoneda('Elije tu Criptomoneda', '', listaCripto)
 
     //Ejecutar llamado a la API
     useEffect(() => {
@@ -54,7 +54,6 @@ const Formulario = () => {
             guardarCriptomonedas(resultado.data.Data)
         }
         consultarAPI()
-        //guardarError(false)
     }, [])
 
     //cuando el usuario hace submit
@@ -62,13 +61,15 @@ const Formulario = () => {
         e.preventDefault()
 
         //validar su ambos campos estan llenos
-        if(moneda === '' || crypto === '') {
+        if(moneda === '' || cripto === '') {
             guardarError(true)
             return
         }
 
         //pasar los datos a otro componente
         guardarError(false)
+        guardarMoneda(moneda)
+        guardarCriptomoneda(cripto)
     }
 
     return ( 
